@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Highlight text on ExtJS</title>
+    <meta charset="utf-8"/>
+
+    <!-- ExtJS source -->
+    <link rel="stylesheet" type="text/css" href="../libs/extjs/css/theme-classic-all-debug.css">
+    <script type="text/javascript" src="../libs/extjs/ext-all.js"></script>
+
+    <!-- CodeMirror source -->
+    <script type="text/javascript" src="../src/codemirror/codemirror-merge-tool.min.js"></script>
+    <link rel=stylesheet href="../src/codemirror/codemirror-merge-tool.css" />
+
+    <script type="text/javascript" src="../src/HighlightTextLines.js"></script>
+    <script type="text/javascript">
+
+Ext.onReady(function() {
+    var textLeft, textRight,
+        UniText1 = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.\nUt wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\n\n\n",
+        UniText2 = "Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo.\nnemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?\n\n\n",
+        iteriable = 5;
+
+    textLeft = Ext.String.trim( Ext.String.repeat(UniText1, iteriable) + Ext.String.repeat(UniText1, iteriable - 1) );
+    textRight = Ext.String.trim( UniText2 + Ext.String.repeat(UniText1, iteriable-2) + UniText2 + Ext.String.repeat(UniText1, iteriable-2) + UniText2);
+
+    Ext.QuickTips.init();
+
+    Ext.create('Ext.container.Viewport',{
+        layout: 'border',
+        items: [
+            {
+                xtype: 'panel',
+                region: 'west',
+                title: 'West Panel',
+                width: 100,
+            },
+            {
+                xtype: 'panel',
+                region: 'center',
+                title: 'Main Panel',
+                // layout: 'fit',
+                layout: {
+                    type: 'vbox',
+                    align: 'stretch'
+                },
+                items: [
+                    {
+                        xtype: 'highlighttextlines',
+                        border: 1,
+                        flex: 1,
+                        lineNumbers: true,
+                        lineWrapping: false,
+                        text: textLeft,
+                        highlightLines: '17,4,10',
+                    },
+                    {
+                        xtype: 'highlighttextlines',
+                        border: 1,
+                        flex: 1,
+                        lineNumbers: true,
+                        lineWrapping: true,
+                        text: textRight,
+                        highlightLines: '4,10, 30 - 40',
+                        listeners: {
+                            render: function(highlighttextlines){
+                                var textLeft = Ext.String.trim( Ext.String.repeat(UniText1, iteriable * 3));
+                                highlighttextlines.setupText(textLeft);
+                                highlighttextlines.setupHighlightLines('18, 40, 35-38,');
+                            },
+                        },
+                    },
+                ]
+            },
+
+        ],
+    });
+});
+    </script>
+</head>
+<body>
+</body>
+</html>

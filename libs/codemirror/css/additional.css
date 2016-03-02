@@ -1,0 +1,6 @@
+.HighlightTextLines .CodeMirror{
+    height: 100%;
+}
+.HighlightTextLines .highlight_text_line{
+    background: orange;
+}
