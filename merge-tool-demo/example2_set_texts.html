@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Merge Tool on ExtJS</title>
+    <meta charset="utf-8"/>
+
+    <!-- ExtJS source -->
+    <link rel="stylesheet" type="text/css" href="../libs/extjs/css/theme-classic-all-debug.css">
+    <script type="text/javascript" src="../libs/extjs/ext-all.js"></script>
+
+    <!-- CodeMirror source -->
+    <script type="text/javascript" src="../src/codemirror/codemirror-merge-tool.min.js"></script>
+    <link rel=stylesheet href="../src/codemirror/codemirror-merge-tool.css" />
+
+    <script type="text/javascript" src="../src/MergeTool.js"></script>
+    <script type="text/javascript">
+
+Ext.onReady(function() {
+    // init texts variable
+    var textLeft,
+        textRight,
+        UniText1 = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.\nUt wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.\n\n\n",
+        UniText2 = "Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo.\nnemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?\n\n\n",
+        repeat = 5;
+
+    textLeft = Ext.String.trim( Ext.String.repeat(UniText1, repeat) + Ext.String.repeat(UniText1, repeat - 1) );
+    textRight = Ext.String.trim( UniText2 + Ext.String.repeat(UniText1, repeat - 2) + UniText2 + Ext.String.repeat(UniText1, repeat - 2) + UniText2);
+
+    Ext.QuickTips.init();
+
+    Ext.create('Ext.container.Viewport',{
+        layout: 'fit',
+        items: [
+            {
+                xtype: 'mergetoolpanel',
+                title: 'MergeTool - Set Texts Into Panels',
+                border: 1,
+                lineNumbers: false,
+                collapseIdentical: true,
+                textLeft: textLeft,
+                textRight: textRight,
+                dockedItems: [
+                    {
+                        xtype: 'toolbar',
+                        dock: 'top',
+                        items: [
+                            {
+                                text: 'hello'
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    });
+
+});
+    </script>
+</head>
+<body>
+</body>
+</html>

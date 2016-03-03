@@ -13,11 +13,7 @@ Ext.define('Ext.ux.MergeTool',{
 
         lineNumbers: false,
         lineWrapping: false,
-        collapseIdentical: 0,
-
-        current_diff: -1,
-        count_diff: 0,
-        selection_diff: []
+        collapseIdentical: 0
     },
     layout: {
         type: 'vbox',
@@ -165,6 +161,10 @@ Ext.define('Ext.ux.MergeTool',{
     listeners: {
         render: "initCodeMirror"
     },
+
+    current_diff: -1,
+    count_diff: 0,
+    selection_diff: [],
 
     initCodeMirror: function() {
         var me = this,
