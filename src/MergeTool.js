@@ -31,13 +31,31 @@ Ext.define('Ext.ux.MergeTool',{
         }
     ],
 
-    dockedItems: [
-        {
+    /**
+     * Params for localization
+     */
+    prevDiffText: 'Prev Diff',
+    nextDiffText: 'Next Diff',
+    goToDiffText: 'Go to Diff',
+    noDiffsText: 'No diffs',
+    goToLineText: 'Go to line',
+    optionsText: 'Options',
+    lineNumbersText: 'Line Numbers',
+    lineWrapText: 'Line Wrap',
+    collapseIdenticalText: 'Collapse Identical',
+    findText: 'Find',
+    leftText: 'Left',
+    rightText: 'Right',
+    lineNumberWindowText: 'Номер линии',
+
+    initComponent: function() {
+
+        var mergeToolTools = {
             xtype: 'toolbar',
             dock: 'top',
             items: [
                 {
-                    text: 'Prev Diff',
+                    text: this.prevDiffText,
                     action: 'codemirror-prev-diff',
                     listeners: {
                         click:  function(button) {
@@ -48,7 +66,7 @@ Ext.define('Ext.ux.MergeTool',{
                 },
                 '-',
                 {
-                    text: 'Next Diff',
+                    text: this.nextDiffText,
                     action: 'codemirror-next-diff',
                     listeners: {
                         click: function(button) {
@@ -58,7 +76,7 @@ Ext.define('Ext.ux.MergeTool',{
                     }
                 },
                 {
-                    text: 'Go to Diff',
+                    text: this.goToDiffText,
                     action: 'codemirror-one-diff',
                     hidden: true,
                     listeners: {
@@ -69,14 +87,14 @@ Ext.define('Ext.ux.MergeTool',{
                     }
                 },
                 {
-                    text: 'No diffs',
+                    text: this.noDiffsText,
                     action: 'codemirror-no-diffs',
                     disabled: true,
                     hidden: true
                 },
                 '-',
                 {
-                    text: 'Go to line',
+                    text: this.goToLineText,
                     action: 'codemirror-goto-line',
                     listeners: {
                         click: function(button) {
@@ -87,11 +105,11 @@ Ext.define('Ext.ux.MergeTool',{
                 },
                 '-',
                 {
-                    text: 'Options',
+                    text: this.optionsText,
                     menu: [
                         {
                             xtype: 'menucheckitem',
-                            text: 'Line Numbers',
+                            text: this.lineNumbersText,
                             action: 'codemirror-toggle-linenumbers',
                             listeners: {
                                 checkchange: function(item, check) {
@@ -103,7 +121,7 @@ Ext.define('Ext.ux.MergeTool',{
                         },
                         {
                             xtype: 'menucheckitem',
-                            text: 'Line Wrap',
+                            text: this.lineWrapText,
                             action: 'codemirror-toggle-linewrapping',
                             listeners: {
                                 checkchange: function(item, check){
@@ -115,7 +133,7 @@ Ext.define('Ext.ux.MergeTool',{
                         },
                         {
                             xtype: 'menucheckitem',
-                            text: 'Collapse Identical',
+                            text: this.collapseIdenticalText,
                             action: 'codemirror-toggle-collapse',
                             listeners: {
                                 checkchange: function(item, check){
@@ -129,10 +147,10 @@ Ext.define('Ext.ux.MergeTool',{
                 },
                 '-',
                 {
-                    text: 'Find',
+                    text: this.findText,
                     menu: [
                         {
-                            text: 'Left',
+                            text: this.leftText,
                             action: 'codemirror-find-left',
                             listeners: {
                                 click:  function(button){
@@ -142,7 +160,7 @@ Ext.define('Ext.ux.MergeTool',{
                             }
                         },
                         {
-                            text: 'Right',
+                            text: this.rightText,
                             action: 'codemirror-find-right',
                             listeners: {
                                 click:  function(button){
@@ -155,8 +173,15 @@ Ext.define('Ext.ux.MergeTool',{
                 },
                 '-'
             ]
+        };
+        if ( this.dockedItems && this.dockedItems.length ) {
+            this.dockedItems.push( mergeToolTools );
+        } else {
+            this.dockedItems = [mergeToolTools];
         }
-    ],
+
+        this.callParent();
+    },
 
     listeners: {
         render: "initCodeMirror"
@@ -225,11 +250,19 @@ Ext.define('Ext.ux.MergeTool',{
             prev_button.next('tbseparator').hide();
             next_button.hide();
             one_button.show();
+            nodiff_button.hide();
         } else if (me.count_diff == -1){
             prev_button.hide();
             prev_button.next('tbseparator').hide();
             next_button.hide();
+            one_button.hide();
             nodiff_button.show();
+        } else {
+            prev_button.show();
+            prev_button.next('tbseparator').show();
+            next_button.show();
+            one_button.hide();
+            nodiff_button.hide();
         }
         me.checkCurrentDiff();
     },
@@ -334,7 +367,7 @@ Ext.define('Ext.ux.MergeTool',{
             items: [
                 {
                     xtype: 'numberfield',
-                    fieldLabel: 'Line number',
+                    fieldLabel: me.lineNumberWindowText,
                     labelWidth: '50%',
                     //padding: 5,
                     margin: 5,

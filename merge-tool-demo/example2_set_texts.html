@@ -13,6 +13,7 @@
     <link rel=stylesheet href="../src/codemirror/codemirror-merge-tool.css" />
 
     <script type="text/javascript" src="../src/MergeTool.js"></script>
+    <script type="text/javascript" src="../src/l10n/ru.js"></script>
     <script type="text/javascript">
 
 Ext.onReady(function() {
@@ -36,7 +37,7 @@ Ext.onReady(function() {
                 title: 'MergeTool - Set Texts Into Panels',
                 border: 1,
                 lineNumbers: false,
-                collapseIdentical: true,
+//                collapseIdentical: true,
                 textLeft: textLeft,
                 textRight: textRight,
                 dockedItems: [
@@ -45,8 +46,48 @@ Ext.onReady(function() {
                         dock: 'top',
                         items: [
                             {
-                                text: 'hello'
-                            }
+                                text: 'Поменять текст слева',
+                                listeners: {
+                                    click: function( button ) {
+                                        var mergeToolPanel = button.up('mergetoolpanel');
+                                        mergeToolPanel.setLeftText( textRight );
+                                    }
+                                }
+                            },
+                            '-',
+                            {
+                                text: 'Поменять текст справа',
+                                listeners: {
+                                    click: function( button ) {
+                                        var mergeToolPanel = button.up('mergetoolpanel');
+                                        mergeToolPanel.setRightText( textLeft );
+                                    }
+                                }
+                            },
+                            '-',
+                            {
+                                text: 'Установить тексты с одним различием',
+                                listeners: {
+                                    click: function( button ) {
+                                        var mergeToolPanel = button.up('mergetoolpanel'),
+                                            textLeft = UniText1 + UniText1,
+                                            textRight = UniText1 + UniText2;
+                                        mergeToolPanel.setTexts( textLeft, textRight );
+                                    }
+                                }
+                            },
+                            '-',
+                            {
+                                text: 'Установить идентичные тексты',
+                                listeners: {
+                                    click: function( button ) {
+                                        var mergeToolPanel = button.up('mergetoolpanel'),
+                                            text = UniText1 + UniText2 + UniText1;
+                                        mergeToolPanel.setTexts( text, text );
+                                    }
+                                }
+                            },
+                            '-'
                         ]
                     }
                 ]
