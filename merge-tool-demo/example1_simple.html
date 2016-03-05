@@ -12,7 +12,9 @@
     <script type="text/javascript" src="../src/codemirror/codemirror-merge-tool.min.js"></script>
     <link rel=stylesheet href="../src/codemirror/codemirror-merge-tool.css" />
 
+    <!-- MergeTool source -->
     <script type="text/javascript" src="../src/MergeTool.js"></script>
+    <!-- MergeTool localization -->
     <script type="text/javascript" src="../src/l10n/ru.js"></script>
     <script type="text/javascript">
 
@@ -26,8 +28,6 @@ Ext.onReady(function() {
 
     textLeft = Ext.String.trim( Ext.String.repeat(UniText1, repeat) + Ext.String.repeat(UniText1, repeat - 1) );
     textRight = Ext.String.trim( UniText2 + Ext.String.repeat(UniText1, repeat - 2) + UniText2 + Ext.String.repeat(UniText1, repeat - 3) + UniText2);
-
-    Ext.QuickTips.init();
 
     Ext.create('Ext.container.Viewport',{
         layout: 'fit',
